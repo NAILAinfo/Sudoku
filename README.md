@@ -1,2 +1,3 @@
-# GRAPHEX
-logiciel (théorie des graphes)
+# une application de bureau Java - Sudoku
+
+
