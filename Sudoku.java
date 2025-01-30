@@ -1,18 +1,23 @@
-import java.util.Scanner;
-
 public class Sudoku {
-    
-    public void initial(int[][] matrice){
-        for(int i = 0; i < 9; i++){
-            for(int j = 0; j < 9; j++){
-                matrice[i][j] = 0;
+    int[][] grille = new int[9][9];
+
+    public Sudoku() {
+        this.grille = new int[9][9];
+        initial();
+        resoudre(grille);
+    }
+
+    public void initial() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                this.grille[i][j] = 0;
             }
         }
     }
 
-    public boolean valide(int[][] matrice, int ligne, int colonne, int val) {
+    public boolean valide(int ligne, int colonne, int val) {
         for(int i = 0; i < 9; i++){
-            if(matrice[ligne][i] == val || matrice[i][colonne] == val){
+            if(grille[ligne][i] == val || grille[i][colonne] == val){
                 return false;
             }
         }
@@ -21,7 +26,7 @@ public class Sudoku {
         
         for(int i = ligneDebut; i < ligneDebut + 3; i++){
             for(int j = colonneDebut; j < colonneDebut + 3; j++){
-                if(matrice[i][j] == val){
+                if(grille[i][j] == val){
                     return false;
                 }
             }
@@ -48,37 +53,21 @@ public class Sudoku {
         if(vide) return true;
 
         for(int val = 1; val <= 9; val++){
-            if(valide(matrice, ligne, colonne, val)){
-                matrice[ligne][colonne] = val;
-                if(resoudre(matrice)) return true;
-                matrice[ligne][colonne] = 0;
+            if(valide(ligne, colonne, val)){
+                grille[ligne][colonne] = val;
+                if(resoudre(grille)) return true;
+                grille[ligne][colonne] = 0;
             }
         }
         return false;
     }
-
-    public void afficherGrille(int[][] matrice) {
+    public static void main(String[] args) {
+        Sudoku sudoku = new Sudoku();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
-                System.out.print(matrice[i][j] + " ");
+                System.out.print(sudoku.grille[i][j] + " ");
             }
             System.out.println();
         }
     }
-
-    public static void main(String[] args) {
-        Sudoku sudoku = new Sudoku();
-        int[][] matrice = new int[9][9];
-        sudoku.initial(matrice);
-        if(sudoku.resoudre(matrice))
-        {
-            sudoku.afficherGrille(matrice);
-                }
-            
-        else{
-            System.out.println("Pas de solution");
-        }
-
-    }
-    
 }
